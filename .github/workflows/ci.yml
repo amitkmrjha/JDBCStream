@@ -1,0 +1,25 @@
+name: CI
+on:
+  pull_request:
+  push:
+jobs:
+  format: 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check code formatting
+      run: sbt scalafmtSbtCheck scalafmtCheck test:scalafmtCheck
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Scala
+        uses: olafurpg/setup-scala@v10
+        with:
+          java-version: "openjdk@1.17"
+      - name: Build and Test
+        run: sbt -v -Dfile.encoding=UTF-8 +test
+
+  

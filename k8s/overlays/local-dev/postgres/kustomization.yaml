@@ -1,0 +1,7 @@
+patches:
+  - postgres-deployment.yaml
+resources:
+- ../../../../k8s/base/postgres
+- postgres-secrets.yaml
+- postgres-pvc.yaml
+- postgres-pv.yaml

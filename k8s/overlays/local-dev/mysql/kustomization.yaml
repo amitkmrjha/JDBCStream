@@ -1,0 +1,5 @@
+patches:
+  - mysql-deployment.yaml
+resources:
+- ../../../../k8s/base/mysql
+- mysql-secrets.yaml

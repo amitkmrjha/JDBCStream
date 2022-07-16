@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flyway-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: flyway
+          image: flyway/flyway:9.0.0
+          args:
+            - info
+            - repair
+            - migrate
+            - info
+          env:
+            - name: FLYWAY_URL
+              value: jdbc:postgresql://postgres-svc:5432/migration-onboarding
+            - name: FLYWAY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: tf-postgres-credentials
+                  key: user
+            - name: FLYWAY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tf-postgres-credentials
+                  key: password
+          volumeMounts:
+            - mountPath: /flyway/sql
+              name: sql
+      volumes:
+        - name: sql
+          configMap:
+            name: flyway-config-map
+      restartPolicy: Never

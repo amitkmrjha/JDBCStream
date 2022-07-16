@@ -1,0 +1,106 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: migration-onboarding
+  labels:
+    app.kubernetes.io/name: migration-onboarding
+spec:
+  kafka:
+    version: 3.1.0
+    replicas: 1
+    template:
+      pod:
+        metadata:
+          labels:
+            app.kubernetes.io/name: migration-onboarding
+        securityContext:
+          runAsUser: 1001
+      kafkaContainer:
+        securityContext:
+          runAsUser: 1001
+          readOnlyRootFilesystem: true
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+    config:
+      offsets.topic.replication.factor: 1
+      transaction.state.log.replication.factor: 1
+      transaction.state.log.min.isr: 1
+      default.replication.factor: 1
+      min.insync.replicas: 1
+      inter.broker.protocol.version: "3.1"
+    storage:
+      type: ephemeral
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 200m
+        memory: 1Gi
+  zookeeper:
+    replicas: 1
+    template:
+      pod:
+        metadata:
+          labels:
+            app.kubernetes.io/name: migration-onboarding
+        securityContext:
+          runAsUser: 1001
+      zookeeperContainer:
+        securityContext:
+          runAsUser: 1001
+          readOnlyRootFilesystem: true
+    storage:
+      type: ephemeral
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 200m
+        memory: 1Gi
+  entityOperator:
+    template:
+      pod:
+        securityContext:
+          runAsUser: 1001
+      topicOperatorContainer:
+        securityContext:
+          readOnlyRootFilesystem: true
+      userOperatorContainer:
+        securityContext:
+          readOnlyRootFilesystem: true
+      tlsSidecarContainer:
+        securityContext:
+          readOnlyRootFilesystem: true
+    topicOperator:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 384Mi
+        requests:
+          cpu: 200m
+          memory: 384Mi
+    userOperator:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 384Mi
+        requests:
+          cpu: 200m
+          memory: 384Mi
+    tlsSidecar:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 384Mi
+        requests:
+          cpu: 200m
+          memory: 384Mi

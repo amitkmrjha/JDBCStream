@@ -1,0 +1,5 @@
+resources:
+  - localstack-deployment.yaml
+  - localstack-service.yaml
+  - localstack-claim0-persistentvolumeclaim.yaml
+  - localstack-claim1-persistentvolumeclaim.yaml

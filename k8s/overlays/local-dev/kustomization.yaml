@@ -1,0 +1,9 @@
+resources:
+- ../../../k8s/base/global
+- postgres
+#- mysql
+- kafka
+#- prometheus
+#- grafana
+#- localstack
+- flyway

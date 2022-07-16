@@ -1,0 +1,4 @@
+resources:
+  - strimzi-operator.yaml
+  - kafka.yaml
+  - topics.yaml
