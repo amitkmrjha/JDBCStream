@@ -13,8 +13,8 @@ services:
     container_name: postgres
     image: postgres:14.0
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-supermo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-supermo}
       POSTGRES_DB: ${POSTGRES_DB:-migration-onboarding}
       PGDATA: /data/postgres
     ports:
