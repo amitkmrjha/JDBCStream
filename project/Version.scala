@@ -27,7 +27,7 @@ object Version {
   val json4s               = "4.0.5"
   val alpakkaKafka         = "3.0.0"
   val alpakkaDynamoDB      = "3.0.4"
-  val akkaProjection       = "1.2.3"
+  val akkaProjection       = "1.2.4"
   val protobufUtil         = "3.19.4"
   val scalikeJDBC          = "4.0.0"
   val sslConfig            = "0.6.0"
