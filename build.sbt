@@ -95,4 +95,14 @@ lazy val dockerSettings = Seq(
 
 lazy val `migration-onboarding` = (project in file("."))
   .settings(buildSettings: _*)
-  .aggregate()
+  .aggregate(`mo-persistence`)
+
+
+lazy val `mo-persistence` = (project in file("mo-persistence"))
+  .configs(IntegrationTest)
+  .settings(buildSettings: _*)
+  .settings(
+    Defaults.itSettings,
+    libraryDependencies ++= commonDeps ++ akkaDeps ++ akkaHttpDeps ++ akkaPersistenceDeps ++ akkaStreamsDeps ++ akkaProjectionDeps ++ monitoringDeps,
+    excludeDependencies ++= excludeProtobufConflictDeps ++ excludeXmlConflictDeps
+  )
